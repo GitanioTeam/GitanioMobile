@@ -3,6 +3,7 @@ package developers.gitanio.es.gitanio;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,9 @@ public class ProdutoAdapter extends BaseAdapter{
     List<Produto> produtos;
 
 
-    public ProdutoAdapter(Context _ctx, List<Produto> _produtos){
-        this.ctx = _ctx;
-        this.produtos = _produtos;
+    public ProdutoAdapter(Context ctx, List<Produto> produtos){
+        this.ctx = ctx;
+        this.produtos = produtos;
 
     }
 
@@ -41,14 +42,20 @@ public class ProdutoAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         Produto produto = produtos.get(position);
-        View linha = LayoutInflater.from(this.ctx).inflate(R.layout.item_produto, null);
-        ImageView imgProduto = (ImageView) linha.findViewById(R.id.foto_produto);
-        TextView txtProduto = (TextView) linha.findViewById(R.id.text_produto);
-        TextView txtQuantidade = (TextView) linha.findViewById(R.id.text_qnt);
 
-        Resources res = ctx.getResources();
+        LayoutInflater inflater = LayoutInflater.from(ctx);
+        View produtoView = inflater.inflate(R.layout.item_produto, null);
 
-        return null;
+        TextView nome = (TextView) produtoView.findViewById(R.id.text_produto);
+        TextView quantidade = (TextView) produtoView.findViewById(R.id.text_qnt);
+        ImageView foto = (ImageView) produtoView.findViewById(R.id.foto_produto);
+
+        nome.setText(produto.getNome());
+        quantidade.setText(produto.getQuantidade());
+        foto.setImageResource(produto.getImagemLink());
+
+        return produtoView;
     }
 }
