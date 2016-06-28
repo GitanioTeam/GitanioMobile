@@ -1,17 +1,16 @@
 package developers.gitanio.es.gitanio;
 
-
 public class Produto {
 
     private String nome;
     private String descricao;
-    private String imagemLink;
+    private String foto;
     private int quantidade;
 
-    public Produto(String nome, String descricao, String imagemLink, int quantidade) {
+    public Produto(String nome, String descricao, String foto, int quantidade) {
         this.nome = nome;
         this.descricao = descricao;
-        this.imagemLink = imagemLink;
+        this.foto = foto;
         this.quantidade = quantidade;
     }
 
@@ -27,7 +26,7 @@ public class Produto {
         return descricao;
     }
 
-    public String getImagemLink() {
-        return imagemLink;
+    public String getFoto() {
+        return foto;
     }
 }

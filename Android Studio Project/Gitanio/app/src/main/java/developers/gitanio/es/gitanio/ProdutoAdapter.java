@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ProdutoAdapter extends BaseAdapter{
@@ -45,16 +46,21 @@ public class ProdutoAdapter extends BaseAdapter{
 
         Produto produto = produtos.get(position);
 
-        LayoutInflater inflater = LayoutInflater.from(ctx);
-        View produtoView = inflater.inflate(R.layout.item_produto, null);
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View produtoView = inflater.inflate(R.layout.item_produto, parent, true);
 
-        TextView nome = (TextView) produtoView.findViewById(R.id.text_produto);
-        TextView quantidade = (TextView) produtoView.findViewById(R.id.text_qnt);
-        ImageView foto = (ImageView) produtoView.findViewById(R.id.foto_produto);
+        try {
+            TextView nome = (TextView) produtoView.findViewById(R.id.text_produto);
+            TextView quantidade = (TextView) produtoView.findViewById(R.id.text_qnt);
+            ImageView foto = (ImageView) produtoView.findViewById(R.id.foto_produto);
 
-        nome.setText(produto.getNome());
-        quantidade.setText(produto.getQuantidade());
-        foto.setImageResource(produto.getImagemLink());
+            nome.setText(produto.getNome());
+            quantidade.setText(produto.getQuantidade());
+            foto.setImageBitmap(ProdutoHttp.getImageBitmap(produto));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return produtoView;
     }
