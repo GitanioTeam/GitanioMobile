@@ -1,51 +1,67 @@
 package developers.gitanio.es.gitanio;
 
 
-
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.content.res.Resources;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.IOException;
 import java.util.List;
 
-public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.MyViewHolder>{
+public class ProdutoAdapter extends BaseAdapter{
 
-    private List<Produto> listaProdutos;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView nome;
-        public TextView quantidade;
-
-        public MyViewHolder(View view) {
-            super(view);
-            nome = (TextView) view.findViewById(R.id.text_produto);
-            quantidade = (TextView) view.findViewById(R.id.text_qnt);
-        }
-    }
+    Context ctx;
+    List<Produto> produtos;
 
 
-    public ProdutoAdapter(List<Produto> listaProdutos) {
-        this.listaProdutos = listaProdutos;
+    public ProdutoAdapter(Context ctx, List<Produto> produtos){
+        this.ctx = ctx;
+        this.produtos = produtos;
+
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_produto, parent, false);
-
-        return new MyViewHolder(itemView);
+    public int getCount(){
+        return this.produtos.size();
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Produto produto = listaProdutos.get(position);
-        holder.nome.setText(produto.getNome());
-        holder.quantidade.setText(produto.getQuantidade());
+    public Object getItem(int position) {
+        return this.produtos.get(position);
     }
 
     @Override
-    public int getItemCount() {
-        return listaProdutos.size();
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        Produto produto = produtos.get(position);
+
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View produtoView = inflater.inflate(R.layout.item_produto, parent, true);
+
+        //try {
+            TextView nome = (TextView) produtoView.findViewById(R.id.text_produto);
+            TextView quantidade = (TextView) produtoView.findViewById(R.id.text_qnt);
+            ImageView foto = (ImageView) produtoView.findViewById(R.id.foto_produto);
+
+            nome.setText(produto.getNome());
+            quantidade.setText(produto.getQuantidade());
+            //foto.setImageBitmap(ProdutoHttp.getImageBitmap(produto));
+
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
+
+        return produtoView;
     }
 }

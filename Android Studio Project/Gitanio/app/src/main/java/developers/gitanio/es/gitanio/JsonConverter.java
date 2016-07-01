@@ -1,5 +1,7 @@
 package developers.gitanio.es.gitanio;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,14 +12,24 @@ public class JsonConverter {
 
     public static Produto getProduto(String json) throws JSONException {
 
-        JSONObject produtoJson = new JSONObject(json);
+        Gson gson = new Gson();
+        Produto produto = gson.fromJson(json, Produto.class);
 
-        String quantidade = produtoJson.getString("quantidade");
-        String nome = produtoJson.getString("nome");
-        String foto = produtoJson.getString("foto");
-        String descricao = produtoJson.getString("nome");
-
-        Produto produto = new Produto(nome, quantidade);
         return(produto);
+    }
+
+    public static JSONObject setAutenticacao(String user, String senha) throws JSONException {
+
+        JSONObject autenticacao = new JSONObject();
+        autenticacao.put("user", user);
+        autenticacao.put("senha", senha);
+
+        return(autenticacao);
+    }
+
+    public static String getToken(String json) throws JSONException {
+
+        JSONObject token = new JSONObject(json);
+        return(token.getString("token"));
     }
 }
