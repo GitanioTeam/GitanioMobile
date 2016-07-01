@@ -49,18 +49,18 @@ public class ProdutoAdapter extends BaseAdapter{
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View produtoView = inflater.inflate(R.layout.item_produto, parent, true);
 
-        try {
+        //try {
             TextView nome = (TextView) produtoView.findViewById(R.id.text_produto);
             TextView quantidade = (TextView) produtoView.findViewById(R.id.text_qnt);
             ImageView foto = (ImageView) produtoView.findViewById(R.id.foto_produto);
 
             nome.setText(produto.getNome());
             quantidade.setText(produto.getQuantidade());
-            foto.setImageBitmap(ProdutoHttp.getImageBitmap(produto));
+            //foto.setImageBitmap(ProdutoHttp.getImageBitmap(produto));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
 
         return produtoView;
     }
