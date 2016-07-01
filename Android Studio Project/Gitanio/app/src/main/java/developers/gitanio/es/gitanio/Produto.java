@@ -5,16 +5,16 @@ public class Produto {
     private String nome;
     private String descricao;
     private String foto;
-    private int quantidade;
+    private String quantidade;
 
-    public Produto(String nome, String descricao, String foto, int quantidade) {
+    public Produto(String nome/*, String descricao , String foto*/, String quantidade) {
         this.nome = nome;
-        this.descricao = descricao;
-        this.foto = foto;
+        //this.descricao = descricao;
+        //this.foto = foto;
         this.quantidade = quantidade;
     }
 
-    public int getQuantidade() {
+    public String getQuantidade() {
         return quantidade;
     }
 

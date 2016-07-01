@@ -2,17 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
      android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp" >
+    >
 
 
-    <android.support.v4.widget.CircleImageView
+    <ImageView
         android:id="@+id/foto_produto"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@android:drawable/btn_plus"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"/>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/text_produto"
@@ -20,7 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/foto_produto"
         android:layout_centerInParent="true"
-        android:text="testando essa parada"/>
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"/>
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/text_qnt"
@@ -29,7 +31,22 @@
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:textColor="@color/colorAccent"
-        android:text="50"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:textSize="20sp"/>
+
+    <LinearLayout
+
+        android:layout_height="0.7dp"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+
+        >
+    </LinearLayout>
 
 
 </RelativeLayout>

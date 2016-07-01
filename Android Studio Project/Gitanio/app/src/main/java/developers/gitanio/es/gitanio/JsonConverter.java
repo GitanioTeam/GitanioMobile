@@ -12,12 +12,12 @@ public class JsonConverter {
 
         JSONObject produtoJson = new JSONObject(json);
 
-        int quantidade = produtoJson.getInt("quantidade");
+        String quantidade = produtoJson.getString("quantidade");
         String nome = produtoJson.getString("nome");
         String foto = produtoJson.getString("foto");
-        String descricao = produtoJson.getString("descricao");
+        String descricao = produtoJson.getString("nome");
 
-        Produto produto = new Produto(nome, descricao, foto, quantidade);
+        Produto produto = new Produto(nome, quantidade);
         return(produto);
     }
 }
