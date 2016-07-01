@@ -1,12 +1,11 @@
 package developers.gitanio.es.gitanio;
 
 import android.os.AsyncTask;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -14,26 +13,48 @@ import com.squareup.okhttp.Response;
 public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
 
     public static final String BASE_URL = "https://raw.githubusercontent.com/gustavosotnas/gitanio/master/";
-    private AsyncResponse delegate;
+    private AsyncResponse asyncResponse;
+    private OkHttpClient client;
 
-    public ProdutoHttp(AsyncResponse delegate){
-        this.delegate = delegate;
+    public ProdutoHttp(AsyncResponse asyncResponse){
+        
+        this.asyncResponse = asyncResponse;
+        this.client = new OkHttpClient();
+        client.setReadTimeout(5, TimeUnit.SECONDS);
+        client.setConnectTimeout(10, TimeUnit.SECONDS);
+
     }
 
     public AsyncResponse getDelegate() {
-        return delegate;
+        return asyncResponse;
     }
 
+    private void getToken(JsonObject jsonUserId){
+
+        String token = null;
+
+        try {
+            String userId = AppUserConfig.getInstance().getUserLoginConfig().toString();
+            String linkUrl = BASE_URL + "/login/" + userId;
+            Request request = new Request.Builder().url(linkUrl).build();
+            Response response = client.newCall(request).execute();
+            String json = response.body().string();
+            token = JsonConverter.getToken(json);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        AppUserConfig.getInstance().setToken(token);
+    }
+    
     private Produto[] obterProdutosDoServidor(){
 
         Produto[] resposta = null;
 
-        OkHttpClient client = new OkHttpClient();
-        client.setReadTimeout(5, TimeUnit.SECONDS);
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-
         try {
-            String linkUrl = BASE_URL + "gitanio.json";
+            String token = AppUserConfig.getInstance().getToken();
+            String linkUrl = BASE_URL + "gitanio.json&token=" + token;
             Request request = new Request.Builder().url(linkUrl).build();
             Response response = client.newCall(request).execute();
             String json = response.body().string();
@@ -62,6 +83,6 @@ public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
 
     @Override
     protected void onPostExecute(List<Produto> produtos) {
-        delegate.setListProduto(produtos);
+        asyncResponse.setListProduto(produtos);
     }
 }

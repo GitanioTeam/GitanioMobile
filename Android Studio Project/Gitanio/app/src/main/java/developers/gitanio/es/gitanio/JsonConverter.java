@@ -18,7 +18,7 @@ public class JsonConverter {
         return(produto);
     }
 
-    public static JSONObject setAutenticacao(String user, String senha) throws JSONException {
+    public static JSONObject getAutenticacao(String user, String senha) throws JSONException {
 
         JSONObject autenticacao = new JSONObject();
         autenticacao.put("user", user);
