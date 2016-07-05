@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-
 /**
  * Created by paulo on 28/06/16.
  */
@@ -35,9 +34,9 @@ public class ToolbarSupport {
      * @param toolbar toolbar object
      * @param title title on the toolbar
      */
-    public static void startToolbar(AppCompatActivity activity, Toolbar toolbar, String title){
+    public static Toolbar startToolbar(AppCompatActivity activity, Toolbar toolbar, String title){
         activity.setSupportActionBar(toolbar);
         toolbar.setTitle(title);
-
+        return toolbar;
     }
 }

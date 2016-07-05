@@ -1,14 +1,21 @@
-package developers.gitanio.es.gitanio;
+package developers.gitanio.es.gitanio.controller;
 
 import android.os.AsyncTask;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import developers.gitanio.es.gitanio.AppUserConfig;
+import developers.gitanio.es.gitanio.JsonConverter;
+import developers.gitanio.es.gitanio.model.Produto;
+import developers.gitanio.es.gitanio.services.AsyncResponse;
 
 public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
 

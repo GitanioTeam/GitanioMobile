@@ -1,4 +1,4 @@
-package developers.gitanio.es.gitanio;
+package developers.gitanio.es.gitanio.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,10 +6,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import developers.gitanio.es.gitanio.model.Produto;
+import developers.gitanio.es.gitanio.ProdutoAdapter;
+import developers.gitanio.es.gitanio.controller.ProdutoHttp;
+import developers.gitanio.es.gitanio.R;
+import developers.gitanio.es.gitanio.ToolbarSupport;
+import developers.gitanio.es.gitanio.services.AsyncHandle;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.produtos_toolbar);
-        ToolbarSupport.startToolbar(this, toolbar,"Estoque");
+        toolbar = ToolbarSupport.startToolbar(this, toolbar,"Estoque");
 
         recyclerView = (RecyclerView) findViewById(R.id.list_produtos);
 

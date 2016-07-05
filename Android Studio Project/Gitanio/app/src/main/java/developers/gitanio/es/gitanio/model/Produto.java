@@ -1,4 +1,4 @@
-package developers.gitanio.es.gitanio;
+package developers.gitanio.es.gitanio.model;
 
 public class Produto {
 

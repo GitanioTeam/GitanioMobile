@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.List;
 
+import developers.gitanio.es.gitanio.model.Produto;
+
 public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.MyViewHolder>{
 
     private List<Produto> listaProdutos;

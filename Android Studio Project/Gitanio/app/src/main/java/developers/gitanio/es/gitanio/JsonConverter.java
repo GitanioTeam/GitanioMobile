@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import developers.gitanio.es.gitanio.model.Produto;
+
 /**
  * Created by pedro on 26/06/16.
  */
