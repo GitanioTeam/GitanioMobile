@@ -1,9 +1,11 @@
-package developers.gitanio.es.gitanio;
+package developers.gitanio.es.gitanio.controller;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import developers.gitanio.es.gitanio.R;
 
 /**
  * Created by paulo on 28/06/16.

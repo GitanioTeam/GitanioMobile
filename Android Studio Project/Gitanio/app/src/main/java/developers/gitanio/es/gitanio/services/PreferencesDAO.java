@@ -3,7 +3,7 @@ package developers.gitanio.es.gitanio.services;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
-import developers.gitanio.es.gitanio.model.Usuario;
+import developers.gitanio.es.gitanio.model.Validation;
 
 /**
  * Created by paulo on 05/07/16.
@@ -11,7 +11,6 @@ import developers.gitanio.es.gitanio.model.Usuario;
 public class PreferencesDAO {
     private String PREFS_NAME = "MyPrefsFile";
     private SharedPreferences settings;
-    SharedPreferences.Editor editor;
 
     public PreferencesDAO(Activity activity){
 
@@ -22,10 +21,11 @@ public class PreferencesDAO {
         return settings.getBoolean("saved", false);
     }
 
-    public void storeUserData(Usuario usuario){
+    public void storeUserData(Validation usuario){
+
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("username", usuario.getUsername());
-        editor.putString("name", usuario.getName());
+        editor.putString("email", usuario.getEmail());
+        editor.putString("senha", usuario.getSenha());
 
         // Commit the edits!
         editor.putBoolean("saved", true);
@@ -35,10 +35,12 @@ public class PreferencesDAO {
     /** Restore persistent user data
      *
      */
-    public Usuario restoreUserData(){
-        Usuario usuario = new Usuario();
-        usuario.setName(settings.getString("name", null));
-        usuario.setUsername(settings.getString("username", null));
+    public Validation restoreUserData(){
+
+        Validation usuario = new Validation();
+        usuario.setEmail(settings.getString("email", null));
+        usuario.setSenha(settings.getString("senha", null));
+
         return usuario;
     }
 }

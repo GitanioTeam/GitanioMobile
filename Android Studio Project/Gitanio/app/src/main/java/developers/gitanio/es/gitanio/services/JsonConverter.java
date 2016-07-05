@@ -1,4 +1,4 @@
-package developers.gitanio.es.gitanio;
+package developers.gitanio.es.gitanio.services;
 
 import com.google.gson.Gson;
 

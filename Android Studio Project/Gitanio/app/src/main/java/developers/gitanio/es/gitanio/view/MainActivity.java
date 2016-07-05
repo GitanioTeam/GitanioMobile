@@ -1,4 +1,4 @@
-package developers.gitanio.es.gitanio.view;
+package developers.gitanio.es.gitanio;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +10,10 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import developers.gitanio.es.gitanio.controller.ToolbarSupport;
 import developers.gitanio.es.gitanio.model.Produto;
-import developers.gitanio.es.gitanio.ProdutoAdapter;
+import developers.gitanio.es.gitanio.controller.ProdutoAdapter;
 import developers.gitanio.es.gitanio.controller.ProdutoHttp;
-import developers.gitanio.es.gitanio.R;
-import developers.gitanio.es.gitanio.ToolbarSupport;
 import developers.gitanio.es.gitanio.services.AsyncHandle;
 
 public class MainActivity extends AppCompatActivity {

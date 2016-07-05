@@ -1,10 +1,6 @@
 package developers.gitanio.es.gitanio.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,14 +11,21 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpHeaders;
+
+import developers.gitanio.es.gitanio.MainActivity;
 import developers.gitanio.es.gitanio.R;
-import developers.gitanio.es.gitanio.ToolbarSupport;
-import developers.gitanio.es.gitanio.model.Usuario;
+import developers.gitanio.es.gitanio.controller.TokenService;
+import developers.gitanio.es.gitanio.controller.ToolbarSupport;
+import developers.gitanio.es.gitanio.model.AnDebugger;
+import developers.gitanio.es.gitanio.model.Validation;
 import developers.gitanio.es.gitanio.services.PreferencesDAO;
 
 public class LoginActivity extends AppCompatActivity {
 
     // UI references.
+    private PreferencesDAO preferencesDAO;
     private EditText mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -31,16 +34,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferencesDAO preferencesDAO = new PreferencesDAO(this);
+
+        preferencesDAO = new PreferencesDAO(this);
 
         if(preferencesDAO.hasDataStored()){
             // Se já possui dados do usuário, os recupera e passa a proxima activity
-            Usuario usuario = preferencesDAO.restoreUserData();
+            Validation usuario = preferencesDAO.restoreUserData();
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("username", usuario.getUsername() );
-            intent.putExtra("name", usuario.getName());
-            startActivity(intent);
+            startLogin(usuario);
 
         }else{
             // Senão, carrega os layouts de login
@@ -111,11 +112,33 @@ public class LoginActivity extends AppCompatActivity {
             // Se o formato dos dados está correto,
             // tente fazer login aqui
 
-            startActivity(new Intent(this,MainActivity.class));
+            Validation usuario = new Validation();
+            usuario.setEmail(email);
+            usuario.setSenha(password);
+
+            preferencesDAO.storeUserData(usuario);
+
+            // buscar token
+            startLogin(usuario);
         }
 
     }
 
+    private void startLogin(Validation usuario){
+
+        Intent tokenIntent = new Intent(this, TokenService.class);
+        tokenIntent.putExtra("email", usuario.getEmail());
+        tokenIntent.putExtra("senha", usuario.getSenha());
+        startService(tokenIntent);
+
+        // RETORNA NULL!!!!!
+        HttpAuthentication h = AnDebugger.getInstance().getDeb();
+
+        String token = "";
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("token", token );
+        startActivity(intent);
+    }
 
     private boolean isEmailValid(String email) {
         return email.contains("@");
