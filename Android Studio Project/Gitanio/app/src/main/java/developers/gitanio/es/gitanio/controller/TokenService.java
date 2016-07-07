@@ -14,12 +14,6 @@ import org.json.JSONObject;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 import developers.gitanio.es.gitanio.model.AnDebugger;
 import developers.gitanio.es.gitanio.model.DicionarioURL;
@@ -40,9 +34,9 @@ public class TokenService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        String email = intent.getStringExtra("email");
-        String senha = intent.getStringExtra("senha");
-        String token = getToken(email, senha);
+//        String email = intent.getStringExtra("email");
+//        String senha = intent.getStringExtra("senha");
+//        String token = getToken(email, senha);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -63,7 +57,7 @@ public class TokenService extends Service {
 
         String token = null;
 
-        //try {
+        try {
 
             HttpAuthentication authHeader = new HttpBasicAuthentication(email, senha);
         Log.d("SGIT","Ok");
@@ -71,7 +65,7 @@ public class TokenService extends Service {
             requestHeaders.setAuthorization(authHeader);
 
             AnDebugger.getInstance().setDeb(authHeader);
-            /*JSONObject jsonUserId = JsonConverter.getAutenticacao(email,senha);
+            JSONObject jsonUserId = JsonConverter.getAutenticacao(email,senha);
 
             String userId = jsonUserId.toString();
             String linkUrl = DicionarioURL.GET_LOGIN_URL + "/" + userId;
@@ -80,11 +74,11 @@ public class TokenService extends Service {
             Response response = client.newCall(request).execute();
 
             String json = response.body().string();
-            token = JsonConverter.getToken(json);*/
+            token = JsonConverter.getToken(json);
 
-        //} catch (Exception e){
-        //    e.printStackTrace();
-        //}
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         return(token);
     }

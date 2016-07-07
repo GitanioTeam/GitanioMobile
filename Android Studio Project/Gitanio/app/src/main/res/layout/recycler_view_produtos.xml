@@ -16,4 +16,30 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <Button
+        android:id="@+id/atualizar_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:text="Atualizar"
+        android:textColor="#fefefe"
+        android:background="@color/colorAccent"
+        android:layout_alignBottom="@id/list_produtos"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:layout_alignParentTop="true"
+        android:id="@+id/texto_erro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        android:textSize="20dp"
+        android:text=":(   Ooops! Parece que você está sem rede, tente mais tarde!" />
+
 </RelativeLayout>

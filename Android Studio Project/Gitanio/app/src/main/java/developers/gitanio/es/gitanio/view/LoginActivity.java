@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpHeaders;
 
-import developers.gitanio.es.gitanio.MainActivity;
 import developers.gitanio.es.gitanio.R;
 import developers.gitanio.es.gitanio.controller.TokenService;
 import developers.gitanio.es.gitanio.controller.ToolbarSupport;

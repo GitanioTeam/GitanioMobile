@@ -18,6 +18,7 @@ public class AsyncHandle implements  AsyncResponse {
 
     @Override
     public List<Produto> getListProduto() {
+
         return this.listaProduto;
     }
 }
