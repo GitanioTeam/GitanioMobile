@@ -1,4 +1,5 @@
-# Bem vindo ao GitanioMobile
+![GitânioMobile](Android Studio Project/Gitanio/app/src/main/res/mipmap-mdpi/ic_launcher.png) GitânioMobile
+===========================================================================================================
 
 ### Justificativa do Projeto e Escopo do Produto
 Para contemplar o escopo do sistema [Gitânio](https://github.com/gustavosotnas/Gitanio) que provem de uma plataforma web que tenha funcionalidades integradas a plataforma mobile. Este projeto irá permitir que os gestores das empresas tenham a facilidade e acessibilidade de acompanhar os insumos de seu comércio de qualquer lugar através de seu smartphone.
