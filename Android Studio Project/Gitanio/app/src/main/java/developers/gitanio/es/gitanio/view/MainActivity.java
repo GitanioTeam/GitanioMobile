@@ -57,35 +57,37 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareProdutoData() {
         //testando layout da lista
-//        listaProdutos.add(new Produto("Cerveja Bavaria", "23"));
-//        listaProdutos.add(new Produto("Cerveja Corona", "47"));
-//        listaProdutos.add(new Produto("Refrigerante Coca Cola", "23"));
-//        listaProdutos.add(new Produto("Refrigerante Guarana 2l","23"));
+        //listaProdutos.add(new Produto("Cerveja Bavaria", "23"));
+        //listaProdutos.add(new Produto("Cerveja Corona", "47"));
+        //listaProdutos.add(new Produto("Refrigerante Coca Cola", "23"));
+        //listaProdutos.add(new Produto("Refrigerante Guarana 2l","23"));
 
-//         Código de requisicao
-
+        //Código de requisicao
         Button btn = (Button) findViewById(R.id.atualizar_btn);
         View text =  findViewById(R.id.texto_erro);
+
         this.produtoHttp = new ProdutoHttp(this.asyncHandle);
         this.produtoHttp.execute();
+
         try{
             if(this.asyncHandle.getListProduto().size()>0){
+
                 this.listaProdutos = this.asyncHandle.getListProduto();
                 btn.setVisibility(View.GONE);
                 text.setVisibility(View.GONE);
             }else{
+
                 btn.setVisibility(View.VISIBLE);
                 text.setVisibility(View.VISIBLE);
             }
+
         }catch(NullPointerException e ){
+
             btn.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
         }
 
-
-
         mAdapter.notifyDataSetChanged();
-
     }
 
 }

@@ -7,6 +7,9 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -40,11 +43,14 @@ public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
 
         try {
             String token = AppUserConfig.getInstance().getToken();
-            String linkUrl = DicionarioURL.GET_PRODUTOS_URL;
 
-            Request request = new Request.Builder().url(linkUrl).build();
-            Response response = client.newCall(request).execute();
-            String json = response.body().string();
+            RestTemplate restTemplate = new RestTemplate();
+
+            // Add the String message converter
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+
+            // Make the HTTP GET request, marshaling the response to a String
+            String json = restTemplate.getForObject(DicionarioURL.GET_PRODUTOS_URL, String.class, "Android");
             Gson gson = new Gson();
             resposta = gson.fromJson(json, Produto[].class);
 

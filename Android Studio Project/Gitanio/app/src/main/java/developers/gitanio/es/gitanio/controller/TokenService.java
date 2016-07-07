@@ -34,9 +34,9 @@ public class TokenService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-//        String email = intent.getStringExtra("email");
-//        String senha = intent.getStringExtra("senha");
-//        String token = getToken(email, senha);
+        String email = intent.getStringExtra("email");
+        String senha = intent.getStringExtra("senha");
+        String token = /*getToken(email, senha)*/ "";
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -60,7 +60,8 @@ public class TokenService extends Service {
         try {
 
             HttpAuthentication authHeader = new HttpBasicAuthentication(email, senha);
-        Log.d("SGIT","Ok");
+
+            Log.d("SGIT","Ok");
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setAuthorization(authHeader);
 

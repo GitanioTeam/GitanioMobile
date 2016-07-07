@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         startService(tokenIntent);
 
         // RETORNA NULL!!!!!
-        HttpAuthentication h = AnDebugger.getInstance().getDeb();
+        //HttpAuthentication h = AnDebugger.getInstance().getDeb();
 
         String token = "";
         Intent intent = new Intent(this, MainActivity.class);
