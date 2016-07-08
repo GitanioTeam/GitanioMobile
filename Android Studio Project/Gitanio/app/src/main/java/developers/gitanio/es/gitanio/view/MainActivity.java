@@ -21,7 +21,7 @@ import developers.gitanio.es.gitanio.services.AsyncResponse;
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse{
 
-    private List<Produto> listaProdutos = new ArrayList<>();
+    private List<Produto> listaProdutos = new ArrayList<Produto>();
     private RecyclerView recyclerView;
     private ProdutoAdapter mAdapter;
     private ProdutoHttp produtoHttp;
@@ -65,35 +65,38 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         this.produtoHttp.execute();
 
         //Código de requisicao
-        Button btn = (Button) findViewById(R.id.atualizar_btn);
-        View text =  findViewById(R.id.texto_erro);
-
-        try{
-            if(this.listaProdutos.size() > 0){
-
-                btn.setVisibility(View.GONE);
-                text.setVisibility(View.GONE);
-            }else{
-
-                btn.setVisibility(View.VISIBLE);
-                text.setVisibility(View.VISIBLE);
-            }
-
-        }catch(NullPointerException e ){
-
-            btn.setVisibility(View.VISIBLE);
-            text.setVisibility(View.VISIBLE);
-        }
-
-        mAdapter.notifyDataSetChanged();
+//        Button btn = (Button) findViewById(R.id.atualizar_btn);
+//        View text =  findViewById(R.id.texto_erro);
+//
+//        try{
+//            if(this.listaProdutos.size() > 0){
+//
+//                btn.setVisibility(View.GONE);
+//                text.setVisibility(View.GONE);
+//            }else{
+//
+//                btn.setVisibility(View.VISIBLE);
+//                text.setVisibility(View.VISIBLE);
+//            }
+//
+//        }catch(NullPointerException e ){
+//
+//            btn.setVisibility(View.VISIBLE);
+//            text.setVisibility(View.VISIBLE);
+//        }
+//
+//        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onFinish(List<Produto> output) {
 
-        this.listaProdutos = output;
 
-//Código de requisicao
+        for(Produto i: output){
+            listaProdutos.add(i);
+        }
+
+        //Código de requisicao
         Button btn = (Button) findViewById(R.id.atualizar_btn);
         View text =  findViewById(R.id.texto_erro);
 

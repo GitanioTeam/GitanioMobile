@@ -1,15 +1,8 @@
 package developers.gitanio.es.gitanio.controller;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,14 +10,11 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import developers.gitanio.es.gitanio.model.AppUserConfig;
 import developers.gitanio.es.gitanio.model.DicionarioURL;
@@ -74,6 +64,7 @@ public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
                 jsonObject.remove("_links");
 
                 Produto produto = gson.fromJson(jsonObject.toString(), Produto.class);
+
 
                 produtoList.add(produto);
             }

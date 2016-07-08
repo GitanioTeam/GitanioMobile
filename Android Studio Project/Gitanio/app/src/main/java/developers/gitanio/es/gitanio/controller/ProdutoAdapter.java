@@ -15,13 +15,13 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.MyViewHo
     private List<Produto> listaProdutos;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView nome;
-        public TextView quantidade;
+        public TextView descricao;
+        public TextView qntMinima;
 
         public MyViewHolder(View view) {
             super(view);
-            nome = (TextView) view.findViewById(R.id.text_produto);
-            quantidade = (TextView) view.findViewById(R.id.text_qnt);
+            descricao = (TextView) view.findViewById(R.id.text_produto);
+            qntMinima = (TextView) view.findViewById(R.id.text_qnt);
         }
     }
 
@@ -41,8 +41,8 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Produto produto = listaProdutos.get(position);
-        holder.nome.setText(produto.getDescricao());
-        holder.quantidade.setText(produto.getQuantidadeMinima());
+        holder.descricao.setText(produto.getDescricao());
+        holder.qntMinima.setText(Integer.toString(produto.getQuantidadeMinima()));
     }
 
     @Override
