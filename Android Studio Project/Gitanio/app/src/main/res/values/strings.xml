@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Gitanio</string>
+    <string name="sobre">Este projeto irá permitir que os gestores das empresas tenham a facilidade e acessibilidade de acompanhar os insumos de seu comércio de qualquer lugar através de seu smartphone</string>
 </resources>

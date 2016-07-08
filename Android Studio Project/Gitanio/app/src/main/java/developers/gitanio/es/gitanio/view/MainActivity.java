@@ -1,13 +1,16 @@
 package developers.gitanio.es.gitanio.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +22,9 @@ import developers.gitanio.es.gitanio.controller.ToolbarSupport;
 import developers.gitanio.es.gitanio.model.Produto;
 import developers.gitanio.es.gitanio.services.AsyncResponse;
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse{
-
+public class MainActivity extends AppCompatActivity implements AsyncResponse, SwipeRefreshLayout.OnRefreshListener{
+    private View text;
+    private SwipeRefreshLayout mSwipeRefreshLayout ;
     private List<Produto> listaProdutos = new ArrayList<Produto>();
     private RecyclerView recyclerView;
     private ProdutoAdapter mAdapter;
@@ -30,9 +34,19 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.produtos_toolbar);
-        toolbar = ToolbarSupport.startToolbar(this, toolbar,"Estoque");
 
+
+        //Iniciando interface da toolbar
+        Toolbar toolbar = new Toolbar(getApplicationContext());
+        ToolbarSupport.startToolbar(this,toolbar,R.id.produtos_toolbar,"Estoque");
+
+        //Iniciando interface de delize para atualizar
+        mSwipeRefreshLayout =  (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        text = findViewById(R.id.texto_erro);
+
+        //Iniciando recyclerView
         recyclerView = (RecyclerView) findViewById(R.id.list_produtos);
 
         mAdapter = new ProdutoAdapter(listaProdutos);
@@ -42,82 +56,72 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        Button btn = (Button) findViewById(R.id.atualizar_btn);
-
-        if(btn != null){
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    prepareProdutoData();
-                }
-            });
-        }
-
-        prepareProdutoData();
-
-
+       onRefresh();
     }
-
-    private void prepareProdutoData() {
-
+    @Override
+    public void onRefresh() {
         // Buscando dados do service
+
+        text.setVisibility(View.GONE);
         this.produtoHttp = new ProdutoHttp(this);
         this.produtoHttp.execute();
-
-        //Código de requisicao
-//        Button btn = (Button) findViewById(R.id.atualizar_btn);
-//        View text =  findViewById(R.id.texto_erro);
-//
-//        try{
-//            if(this.listaProdutos.size() > 0){
-//
-//                btn.setVisibility(View.GONE);
-//                text.setVisibility(View.GONE);
-//            }else{
-//
-//                btn.setVisibility(View.VISIBLE);
-//                text.setVisibility(View.VISIBLE);
-//            }
-//
-//        }catch(NullPointerException e ){
-//
-//            btn.setVisibility(View.VISIBLE);
-//            text.setVisibility(View.VISIBLE);
-//        }
-//
-//        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onFinish(List<Produto> output) {
-
+        listaProdutos.clear();
 
         for(Produto i: output){
             listaProdutos.add(i);
         }
 
         //Código de requisicao
-        Button btn = (Button) findViewById(R.id.atualizar_btn);
-        View text =  findViewById(R.id.texto_erro);
 
         try{
             if(this.listaProdutos.size() > 0){
 
-                btn.setVisibility(View.GONE);
+
                 text.setVisibility(View.GONE);
             }else{
 
-                btn.setVisibility(View.VISIBLE);
+
                 text.setVisibility(View.VISIBLE);
             }
 
         }catch(NullPointerException e ){
 
-            btn.setVisibility(View.VISIBLE);
+
             text.setVisibility(View.VISIBLE);
         }
 
         mAdapter.notifyDataSetChanged();
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_estoque, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+
+        if (id == R.id.menu_sobre) {
+            startActivity(new Intent(this, SobreActivity.class));
+            return true;
+        }else if(id == R.id.menu_logout){
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("logout", true);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -8,27 +8,14 @@
     tools:context=".view.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_produtos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_produtos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
 
-    <Button
-        android:id="@+id/atualizar_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="6dp"
-        android:text="Atualizar"
-        android:textColor="#fefefe"
-        android:background="@color/colorAccent"
-        android:layout_alignBottom="@id/list_produtos"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:visibility="gone"
-        />
+        </android.support.v7.widget.RecyclerView>
 
     <TextView
         android:layout_alignParentTop="true"

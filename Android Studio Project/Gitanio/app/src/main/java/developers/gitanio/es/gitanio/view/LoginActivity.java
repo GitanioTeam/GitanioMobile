@@ -11,13 +11,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.springframework.http.HttpAuthentication;
-
 import developers.gitanio.es.gitanio.R;
 import developers.gitanio.es.gitanio.controller.TokenService;
 import developers.gitanio.es.gitanio.controller.ToolbarSupport;
-import developers.gitanio.es.gitanio.model.AnDebugger;
-import developers.gitanio.es.gitanio.model.AppUserConfig;
 import developers.gitanio.es.gitanio.model.Validation;
 import developers.gitanio.es.gitanio.services.PreferencesDAO;
 
@@ -33,10 +29,11 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        boolean logout = getIntent().getBooleanExtra("logout", false);
         preferencesDAO = new PreferencesDAO(this);
 
-        if(preferencesDAO.hasDataStored()){
+
+        if(preferencesDAO.hasDataStored() && !logout){
             // Se já possui dados do usuário, os recupera e passa a proxima activity
             Validation usuario = preferencesDAO.restoreUserData();
 
@@ -45,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             // Senão, carrega os layouts de login
             setContentView(R.layout.activity_login);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.login_toolbar);
-            ToolbarSupport.startToolbar(this, toolbar, "login");
+            Toolbar toolbar = new Toolbar(getApplicationContext());
+            ToolbarSupport.startToolbar(this,toolbar,R.id.login_toolbar,"Login");
 
             mEmailView = (EditText) findViewById(R.id.email);
 

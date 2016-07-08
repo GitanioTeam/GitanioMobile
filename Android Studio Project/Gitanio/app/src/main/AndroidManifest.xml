@@ -10,8 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.MainActivity">
-        </activity>
+        <activity android:name=".view.MainActivity"></activity>
         <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,10 +19,9 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".controller.TokenService"
-            />
+        <service android:name=".controller.TokenService" />
 
+        <activity android:name=".view.SobreActivity"></activity>
     </application>
 
 </manifest>
