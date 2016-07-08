@@ -3,6 +3,7 @@ package developers.gitanio.es.gitanio.controller;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -10,13 +11,23 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import org.json.JSONObject;
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
 
-import developers.gitanio.es.gitanio.model.AnDebugger;
+import java.util.Collections;
+
+import developers.gitanio.es.gitanio.model.AppUserConfig;
 import developers.gitanio.es.gitanio.model.DicionarioURL;
+import developers.gitanio.es.gitanio.model.Produto;
 import developers.gitanio.es.gitanio.services.JsonConverter;
 
 /**
@@ -36,7 +47,9 @@ public class TokenService extends Service {
 
         String email = intent.getStringExtra("email");
         String senha = intent.getStringExtra("senha");
-        String token = /*getToken(email, senha)*/ "";
+        HttpHeaders token = getToken(email, senha);
+
+        AppUserConfig.getInstance().setToken(token);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -53,29 +66,19 @@ public class TokenService extends Service {
         return null;
     }
 
-    private String getToken(String email, String senha){
+    private HttpHeaders getToken(String email, String senha){
 
-        String token = null;
+        HttpHeaders token = null;
 
         try {
 
             HttpAuthentication authHeader = new HttpBasicAuthentication(email, senha);
 
-            Log.d("SGIT","Ok");
             HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setAuthorization(authHeader);
+            requestHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
-            AnDebugger.getInstance().setDeb(authHeader);
-            JSONObject jsonUserId = JsonConverter.getAutenticacao(email,senha);
-
-            String userId = jsonUserId.toString();
-            String linkUrl = DicionarioURL.GET_LOGIN_URL + "/" + userId;
-
-            Request request = new Request.Builder().url(linkUrl).build();
-            Response response = client.newCall(request).execute();
-
-            String json = response.body().string();
-            token = JsonConverter.getToken(json);
+            token = requestHeaders;
 
         } catch (Exception e){
             e.printStackTrace();

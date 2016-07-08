@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
         //listaProdutos.add(new Produto("Refrigerante Guarana 2l","23"));
 
         //Código de requisicao
-        Button btn = (Button) findViewById(R.id.atualizar_btn);
-        View text =  findViewById(R.id.texto_erro);
+        //Button btn = (Button) findViewById(R.id.atualizar_btn);
+        //View text =  findViewById(R.id.texto_erro);
 
         this.produtoHttp = new ProdutoHttp(this.asyncHandle);
         this.produtoHttp.execute();
 
-        try{
+        /*try{
             if(this.asyncHandle.getListProduto().size()>0){
 
                 this.listaProdutos = this.asyncHandle.getListProduto();
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             btn.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
         }
-
+        */
         mAdapter.notifyDataSetChanged();
     }
 

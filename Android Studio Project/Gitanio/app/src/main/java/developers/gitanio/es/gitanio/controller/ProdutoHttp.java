@@ -1,13 +1,19 @@
 package developers.gitanio.es.gitanio.controller;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -22,15 +28,10 @@ import developers.gitanio.es.gitanio.services.AsyncResponse;
 public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
 
     private AsyncResponse asyncResponse;
-    private OkHttpClient client;
 
     public ProdutoHttp(AsyncResponse asyncResponse){
         
         this.asyncResponse = asyncResponse;
-        this.client = new OkHttpClient();
-        client.setReadTimeout(5, TimeUnit.SECONDS);
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-
     }
 
     public AsyncResponse getDelegate() {
@@ -42,17 +43,20 @@ public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
         Produto[] resposta = null;
 
         try {
-            String token = AppUserConfig.getInstance().getToken();
 
+            HttpHeaders token = AppUserConfig.getInstance().getToken();
+
+            // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
-            // Add the String message converter
-            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            // Make the network request
+            ResponseEntity<Object> response = restTemplate.exchange(DicionarioURL.GET_PRODUTOS_URL, HttpMethod.GET,
+                    new HttpEntity<Object>(token), Object.class);
 
-            // Make the HTTP GET request, marshaling the response to a String
-            String json = restTemplate.getForObject(DicionarioURL.GET_PRODUTOS_URL, String.class, "Android");
-            Gson gson = new Gson();
-            resposta = gson.fromJson(json, Produto[].class);
+            Object ob = response.getBody();
+
+            ob.toString();
 
         } catch (Exception e){
             e.printStackTrace();

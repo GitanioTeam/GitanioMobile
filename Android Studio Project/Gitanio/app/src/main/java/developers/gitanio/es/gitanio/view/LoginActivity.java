@@ -17,6 +17,7 @@ import developers.gitanio.es.gitanio.R;
 import developers.gitanio.es.gitanio.controller.TokenService;
 import developers.gitanio.es.gitanio.controller.ToolbarSupport;
 import developers.gitanio.es.gitanio.model.AnDebugger;
+import developers.gitanio.es.gitanio.model.AppUserConfig;
 import developers.gitanio.es.gitanio.model.Validation;
 import developers.gitanio.es.gitanio.services.PreferencesDAO;
 
@@ -125,12 +126,7 @@ public class LoginActivity extends AppCompatActivity {
         tokenIntent.putExtra("senha", usuario.getSenha());
         startService(tokenIntent);
 
-        // RETORNA NULL!!!!!
-        //HttpAuthentication h = AnDebugger.getInstance().getDeb();
-
-        String token = "";
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("token", token );
         startActivity(intent);
     }
 
