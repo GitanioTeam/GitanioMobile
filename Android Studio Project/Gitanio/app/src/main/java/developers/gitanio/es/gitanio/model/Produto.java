@@ -2,17 +2,17 @@ package developers.gitanio.es.gitanio.model;
 
 public class Produto {
 
-    private String codigo;
-    private String quantidadeMinima;
+    private int codigo;
+    private int quantidadeMinima;
     private String descricao;
     private float valorUnitario;
 
 
-    public String getQuantidadeMinima() {
+    public int getQuantidadeMinima() {
         return quantidadeMinima;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
@@ -24,8 +24,10 @@ public class Produto {
         return valorUnitario;
     }
 
-    public Produto(String descricao, String quantidadeMinima) {
+    public Produto(int codigo, String descricao, int quantidadeMinima, float valorUnitario) {
         this.descricao = descricao;
         this.quantidadeMinima = quantidadeMinima;
+        this.codigo = codigo;
+        this.valorUnitario = valorUnitario;
     }
 }

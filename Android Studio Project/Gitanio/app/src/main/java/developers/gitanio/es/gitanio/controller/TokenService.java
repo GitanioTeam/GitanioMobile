@@ -26,16 +26,11 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 
 import developers.gitanio.es.gitanio.model.AppUserConfig;
-import developers.gitanio.es.gitanio.model.DicionarioURL;
-import developers.gitanio.es.gitanio.model.Produto;
-import developers.gitanio.es.gitanio.services.JsonConverter;
 
 /**
  * Created by pedro on 05/07/16.
  */
 public class TokenService extends Service {
-
-    private OkHttpClient client;
 
     @Override
     public void onCreate() {
@@ -45,8 +40,8 @@ public class TokenService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        String email = intent.getStringExtra("email");
-        String senha = intent.getStringExtra("senha");
+        String email = /*intent.getStringExtra("email")*/"user";
+        String senha = /*intent.getStringExtra("senha")*/"password";
         HttpHeaders token = getToken(email, senha);
 
         AppUserConfig.getInstance().setToken(token);
@@ -71,7 +66,6 @@ public class TokenService extends Service {
         HttpHeaders token = null;
 
         try {
-
             HttpAuthentication authHeader = new HttpBasicAuthentication(email, senha);
 
             HttpHeaders requestHeaders = new HttpHeaders();

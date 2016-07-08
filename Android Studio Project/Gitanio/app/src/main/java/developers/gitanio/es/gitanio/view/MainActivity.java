@@ -17,15 +17,14 @@ import developers.gitanio.es.gitanio.controller.ProdutoAdapter;
 import developers.gitanio.es.gitanio.controller.ProdutoHttp;
 import developers.gitanio.es.gitanio.controller.ToolbarSupport;
 import developers.gitanio.es.gitanio.model.Produto;
-import developers.gitanio.es.gitanio.services.AsyncHandle;
+import developers.gitanio.es.gitanio.services.AsyncResponse;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AsyncResponse{
 
     private List<Produto> listaProdutos = new ArrayList<>();
     private RecyclerView recyclerView;
     private ProdutoAdapter mAdapter;
     private ProdutoHttp produtoHttp;
-    private AsyncHandle asyncHandle = new AsyncHandle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +32,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.produtos_toolbar);
         toolbar = ToolbarSupport.startToolbar(this, toolbar,"Estoque");
+
         recyclerView = (RecyclerView) findViewById(R.id.list_produtos);
 
         mAdapter = new ProdutoAdapter(listaProdutos);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
         Button btn = (Button) findViewById(R.id.atualizar_btn);
-        if(btn !=null){
+
+        if(btn != null){
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -56,23 +59,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareProdutoData() {
-        //testando layout da lista
-        //listaProdutos.add(new Produto("Cerveja Bavaria", "23"));
-        //listaProdutos.add(new Produto("Cerveja Corona", "47"));
-        //listaProdutos.add(new Produto("Refrigerante Coca Cola", "23"));
-        //listaProdutos.add(new Produto("Refrigerante Guarana 2l","23"));
 
-        //Código de requisicao
-        //Button btn = (Button) findViewById(R.id.atualizar_btn);
-        //View text =  findViewById(R.id.texto_erro);
-
-        this.produtoHttp = new ProdutoHttp(this.asyncHandle);
+        // Buscando dados do service
+        this.produtoHttp = new ProdutoHttp(this);
         this.produtoHttp.execute();
 
-        /*try{
-            if(this.asyncHandle.getListProduto().size()>0){
+        //Código de requisicao
+        Button btn = (Button) findViewById(R.id.atualizar_btn);
+        View text =  findViewById(R.id.texto_erro);
 
-                this.listaProdutos = this.asyncHandle.getListProduto();
+        try{
+            if(this.listaProdutos.size() > 0){
+
                 btn.setVisibility(View.GONE);
                 text.setVisibility(View.GONE);
             }else{
@@ -86,7 +84,36 @@ public class MainActivity extends AppCompatActivity {
             btn.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
         }
-        */
+
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFinish(List<Produto> output) {
+
+        this.listaProdutos = output;
+
+//Código de requisicao
+        Button btn = (Button) findViewById(R.id.atualizar_btn);
+        View text =  findViewById(R.id.texto_erro);
+
+        try{
+            if(this.listaProdutos.size() > 0){
+
+                btn.setVisibility(View.GONE);
+                text.setVisibility(View.GONE);
+            }else{
+
+                btn.setVisibility(View.VISIBLE);
+                text.setVisibility(View.VISIBLE);
+            }
+
+        }catch(NullPointerException e ){
+
+            btn.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+        }
+
         mAdapter.notifyDataSetChanged();
     }
 

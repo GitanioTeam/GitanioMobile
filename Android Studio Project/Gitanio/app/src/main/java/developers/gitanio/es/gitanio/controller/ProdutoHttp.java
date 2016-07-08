@@ -3,11 +3,16 @@ package developers.gitanio.es.gitanio.controller;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,6 +22,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,11 +44,12 @@ public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
         return asyncResponse;
     }
 
-    private Produto[] obterProdutosDoServidor(){
+    private List<Produto> obterProdutosDoServidor(){
 
-        Produto[] resposta = null;
+        List<Produto> produtoList = new ArrayList<>();
 
         try {
+
 
             HttpHeaders token = AppUserConfig.getInstance().getToken();
 
@@ -51,40 +58,42 @@ public class ProdutoHttp extends AsyncTask<Void,Void,List<Produto>> {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
             // Make the network request
-            ResponseEntity<Object> response = restTemplate.exchange(DicionarioURL.GET_PRODUTOS_URL, HttpMethod.GET,
-                    new HttpEntity<Object>(token), Object.class);
+            ResponseEntity<String> response = restTemplate.exchange(DicionarioURL.GET_PRODUTOS_URL, HttpMethod.GET,
+                    new HttpEntity<Object>(token), String.class);
 
-            Object ob = response.getBody();
+            String body = response.getBody();
+            JSONObject json = new JSONObject(body);
+            json = json.getJSONObject("_embedded");
+            JSONArray array = json.getJSONArray("produtos");
 
-            ob.toString();
+            produtoList = new ArrayList<>();
+            Gson gson = new Gson();
+
+            for(int i = 0; i < array.length(); i++){
+                JSONObject jsonObject = array.getJSONObject(i);
+                jsonObject.remove("_links");
+
+                Produto produto = gson.fromJson(jsonObject.toString(), Produto.class);
+
+                produtoList.add(produto);
+            }
 
         } catch (Exception e){
             e.printStackTrace();
         }
 
-        return resposta;
+        return produtoList;
     }
 
     @Override
     protected List<Produto> doInBackground(Void... params) {
 
-        List<Produto> listaProdutos = new ArrayList<>();
-
-        Produto[] produtos = obterProdutosDoServidor();
-        try{
-            for(Produto p : produtos){
-                listaProdutos.add(p);
-            }
-        }catch(NullPointerException e ){
-
-        }
-
-
+        List<Produto> listaProdutos = obterProdutosDoServidor();
         return(listaProdutos);
     }
 
     @Override
     protected void onPostExecute(List<Produto> produtos) {
-        asyncResponse.setListProduto(produtos);
+        asyncResponse.onFinish(produtos);
     }
 }

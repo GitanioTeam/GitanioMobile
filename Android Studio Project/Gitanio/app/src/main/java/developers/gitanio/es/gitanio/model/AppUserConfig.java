@@ -1,10 +1,6 @@
 package developers.gitanio.es.gitanio.model;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.HttpHeaders;
-
-import developers.gitanio.es.gitanio.services.JsonConverter;
 
 /**
  * Created by pedro on 01/07/16.
