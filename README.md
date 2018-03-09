@@ -1,4 +1,4 @@
-![GitânioMobile](Android Studio Project/Gitanio/app/src/main/res/mipmap-mdpi/ic_launcher.png) GitânioMobile
+<img src="https://github.com/gustavosotnas/GitanioMobile/blob/master/Android%20Studio%20Project/Gitanio/app/src/main/ic_launcher-web.png" width=48 height=48 /> GitânioMobile
 ===========================================================================================================
 
 ### Justificativa do Projeto e Escopo do Produto
